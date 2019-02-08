@@ -12,22 +12,15 @@ var bullet = preload("res://scenes/Shoot.tscn")
 
 func _physics_process(delta):
 	
-	# Fazer o braço apontar para o mouse
-	$Arm.rotation = get_local_mouse_position().angle()
+	set_arm_rotation()
 	
 	# Checar se o player esta olhando pra esquerda ou direita
 	if position.x < get_global_mouse_position().x:
 		lookRight = 1
+		flip_player(lookRight)
 	else:
 		lookRight = 0
-		
-	# Flip nos sprites quando o personagem vira
-	if lookRight:
-		$Sprite.set_scale(Vector2(1, 1))
-		$Arm.set_scale(Vector2(1.5, 0.5))
-	else:
-		$Sprite.set_scale(Vector2(-1, 1))
-		$Arm.set_scale(Vector2(1.5, -0.5))
+		flip_player(lookRight)
 	
 	# Gravity
 	motion.y += GRAVITY
@@ -64,3 +57,16 @@ func shoot():
 	get_parent().add_child(clone_bullet)
 	var direction = get_global_mouse_position() - get_global_position()
 	clone_bullet.apply_impulse(Vector2(), direction * BULLET_SPEED)
+	
+func set_arm_rotation():
+	# Fazer o braço apontar para o mouse
+	$Arm.rotation = get_local_mouse_position().angle()
+	
+func flip_player(to_right):
+	# Flip nos sprites quando o personagem vira
+	if to_right:
+		$Sprite.set_scale(Vector2(1, 1))
+		$Arm.set_scale(Vector2(1.5, 0.5))
+	else:
+		$Sprite.set_scale(Vector2(-1, 1))
+		$Arm.set_scale(Vector2(1.5, -0.5))
