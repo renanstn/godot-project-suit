@@ -50,8 +50,6 @@ func _physics_process(delta):
 	
 func shoot():
 	var clone_bullet = bullet.instance()
-	# var bullet_angle = get_angle_to(get_global_mouse_position()) + $Arm/SpawnBullets.get_rotation()
-	# clone_bullet.set_rotation(bullet_angle)
 	clone_bullet.rotation = $Arm.rotation
 	clone_bullet.position = $Arm/SpawnBullets.get_global_position()
 	get_parent().add_child(clone_bullet)
